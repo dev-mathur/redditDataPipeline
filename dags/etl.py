@@ -34,7 +34,7 @@ def extract(**kwargs):
     return fileName
 
     ################## TRANSFORM DATA #######################################
-def transform(fileName):
+def transformAndLoad(fileName):
     #Create a list to store refined json objects
     list = []
 
@@ -48,22 +48,20 @@ def transform(fileName):
             #Refine the JSON obj
             refinedPost = {
                 "datePosted": post['ingestion_timestamp'],
-                'id': post['data']['id'],
-                'title': post['data']['title'],
-                'author': post['data']['author'],
-                'subreddit': post['data']['subreddit'],
-                'postType': post['data']['post_hint'] if 'post_hint' in post['data'] else 'None',
-                'num_comments': post['data']['num_comments'],
-                'num_upvotes': post['data']['ups'],
-                'num_downvotes': post['data']['downs'],
-                'upvote_ratio': post['data']['upvote_ratio'],
-                'post_link': post['data']['permalink']
+                "id": post['data']['id'],
+                "title": post['data']['title'],
+                "author": post['data']['author'],
+                "subreddit": post['data']['subreddit'],
+                "postType": post['data']['post_hint'] if 'post_hint' in post['data'] else 'None',
+                "num_comments": post['data']['num_comments'],
+                "num_upvotes": post['data']['ups'],
+                "num_downvotes": post['data']['downs'],
+                "upvote_ratio": post['data']['upvote_ratio'],
+                "post_link": post['data']['permalink']
             }
             list.append(refinedPost)
-    return list
- 
-    ################## LOAD DATA #######################################
-def load(list):
+
+     ################## LOAD DATA #######################################
     try: 
         client = MongoClient("mongodb://mongo:27017/") 
         print("Connected successfully!!!") 
@@ -82,9 +80,12 @@ def load(list):
     else:
         collection = db['redditPosts']
 
+    # Insert array of data
+    collection.insert_many(list)
+
     cursor = collection.find({})
     for document in cursor:
           print(document)
-
+          
     #Close connection
     client.close()

@@ -6,7 +6,7 @@ try:
     from datetime import datetime
     import sys
     sys.path.append('etl.py')
-    from etl import extract, transform, load
+    from etl import extract, transformAndLoad
     print("All Dag modules are ok .....")
 except Exception as e:
     print("Error {} ".format(e))
@@ -29,20 +29,12 @@ with DAG(
         provide_context=True,
     )
 
-    transform_task = PythonOperator(
-        task_id="transform",
-        python_callable=transform,
+    transform_load_task = PythonOperator(
+        task_id="transformAndLoad",
+        python_callable=transformAndLoad,
         op_args=[
         "{{ ti.xcom_pull(task_ids='extract') }}"
     ],
     )
 
-    load_task = PythonOperator(
-        task_id="load",
-        python_callable=load,
-        op_args=[
-        "{{ ti.xcom_pull(task_ids='transform') }}"
-    ],
-    )
-
-    extract_task >> transform_task >> load_task
+    extract_task >> transform_load_task
