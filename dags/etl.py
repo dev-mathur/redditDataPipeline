@@ -5,7 +5,7 @@ from datetime import datetime
 from pymongo import MongoClient
 import gdown
 
-def run_etl(**kwargs):
+def extract(**kwargs):
     execution_date = kwargs['execution_date']
     ################## EXTRACT DATA #######################################
     # a file
@@ -31,8 +31,10 @@ def run_etl(**kwargs):
         f.write("[" + decompressed.decode("utf-8").strip().replace("\n", ",").replace('"\n', '') + "]" )
     print(fileName)
 
-    ################## TRANSFORM DATA #######################################
+    return fileName
 
+    ################## TRANSFORM DATA #######################################
+def transform(fileName):
     #Create a list to store refined json objects
     list = []
 
@@ -58,8 +60,10 @@ def run_etl(**kwargs):
                 'post_link': post['data']['permalink']
             }
             list.append(refinedPost)
-
+    return list
+ 
     ################## LOAD DATA #######################################
+def load(list):
     try: 
         client = MongoClient("mongodb://mongo:27017/") 
         print("Connected successfully!!!") 
@@ -78,12 +82,9 @@ def run_etl(**kwargs):
     else:
         collection = db['redditPosts']
 
-    # Insert array of data
-    collection.insert_many(list)
-
     cursor = collection.find({})
     for document in cursor:
           print(document)
-          
+
     #Close connection
     client.close()

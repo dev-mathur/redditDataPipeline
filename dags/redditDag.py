@@ -6,7 +6,7 @@ try:
     from datetime import datetime
     import sys
     sys.path.append('etl.py')
-    from etl import run_etl
+    from etl import extract, transform, load
     print("All Dag modules are ok .....")
 except Exception as e:
     print("Error {} ".format(e))
@@ -23,10 +23,26 @@ with DAG(
         },
         catchup=False) as f:
     
-    run_etl = PythonOperator(
-    task_id='reddit_etl',
-    python_callable=run_etl,
-    provide_context=True, 
-)
+    extract_task = PythonOperator(
+        task_id="extract",
+        python_callable=extract,
+        provide_context=True,
+    )
 
-run_etl
+    transform_task = PythonOperator(
+        task_id="transform",
+        python_callable=transform,
+        op_args=[
+        "{{ ti.xcom_pull(task_ids='extract') }}"
+    ],
+    )
+
+    load_task = PythonOperator(
+        task_id="load",
+        python_callable=load,
+        op_args=[
+        "{{ ti.xcom_pull(task_ids='transform') }}"
+    ],
+    )
+
+    extract_task >> transform_task >> load_task
