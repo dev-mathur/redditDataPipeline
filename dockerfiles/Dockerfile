@@ -3,3 +3,5 @@ RUN pip install pymongo
 RUN pip install zstandard
 RUN pip install pytest
 RUN pip install gdown
+RUN pip install pytest
+RUN pip install pytest-mock

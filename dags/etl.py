@@ -8,7 +8,7 @@ import gdown
 def extract(**kwargs):
     execution_date = kwargs['execution_date']
     ################## EXTRACT DATA #######################################
-    # a file
+
     url = "https://drive.google.com/uc?id=1E7iRwCp7IjvCjh_-owrt2NTMWnvgleZp"
     output = "submissions.zst"
     gdown.download(url, output, quiet=False)

@@ -1,0 +1,60 @@
+[
+    {
+      "ingestion_timestamp": "2023-12-11",
+      "data": {
+        "id": 1,
+        "title": "Sample title",
+        "author": "Sample author",
+        "subreddit": "Sample subreddit",
+        "num_comments": 5,
+        "ups": 10,
+        "downs": 2,
+        "upvote_ratio": 0.8,
+        "permalink": "sample_link",
+        "field_1": "value_1",
+        "field_2": "value_2",
+        "field_3": "value_3",
+        "field_4": "value_4",
+        "field_5": "value_5",
+        "field_6": "value_6",
+        "field_7": "value_7",
+        "field_8": "value_8",
+        "field_9": "value_9",
+        "field_10": "value_10",
+        "field_11": "value_11",
+        "field_12": "value_12",
+        "field_13": "value_13",
+        "field_14": "value_14",
+        "field_15": "value_15"
+      }
+    },
+    {
+      "ingestion_timestamp": "2023-12-12",
+      "data": {
+        "id": 2,
+        "title": "Another title",
+        "author": "Another author",
+        "subreddit": "Another subreddit",
+        "num_comments": 8,
+        "ups": 15,
+        "downs": 3,
+        "upvote_ratio": 0.7,
+        "permalink": "another_sample_link",
+        "field_1": "value_1",
+        "field_2": "value_2",
+        "field_3": "value_3",
+        "field_4": "value_4",
+        "field_5": "value_5",
+        "field_6": "value_6",
+        "field_7": "value_7",
+        "field_8": "value_8",
+        "field_9": "value_9",
+        "field_10": "value_10",
+        "field_11": "value_11",
+        "field_12": "value_12",
+        "field_13": "value_13",
+        "field_14": "value_14",
+        "field_15": "value_15"
+      }
+    }
+  ]
