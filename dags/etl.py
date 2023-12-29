@@ -2,7 +2,8 @@
 import zstandard as zstd
 import json
 from datetime import datetime
-from pymongo import MongoClient
+#from pymongo import MongoClient
+import pandas as pd 
 import gdown
 
 def extract(**kwargs):
@@ -36,7 +37,7 @@ def extract(**kwargs):
     ################## TRANSFORM DATA #######################################
 def transformAndLoad(fileName):
     #Create a list to store refined json objects
-    list = []
+    reddit_list = []
 
     #Open decorator for Processed Raw JSON
     with open(fileName) as file:
@@ -59,9 +60,10 @@ def transformAndLoad(fileName):
                 "upvote_ratio": post['data']['upvote_ratio'],
                 "post_link": post['data']['permalink']
             }
-            list.append(refinedPost)
-
+            reddit_list.append(refinedPost)
+    
      ################## LOAD DATA #######################################
+    '''
     try: 
         client = MongoClient("mongodb://mongo:27017/") 
         print("Connected successfully!!!") 
@@ -88,4 +90,4 @@ def transformAndLoad(fileName):
           print(document)
           
     #Close connection
-    client.close()
+    client.close()'''
